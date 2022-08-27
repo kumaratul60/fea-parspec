@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+
 import "./App.css";
 
 function App() {
@@ -6,25 +7,51 @@ function App() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const mockJson = "https://www.mocky.io/v2/5ba8efb23100007200c2750c";
+
   useEffect(() => {
     const fetchMockData = async () => {
-      const fetchData = await fetch(
-        "https://www.mocky.io/v2/5ba8efb23100007200c2750c"
-      );
+      const fetchData = await fetch(mockJson);
       const response = await fetchData.json();
       setMockData(response);
       setIsLoading(false);
+      setInput(input);
       // console.log("🚀 response", response);
     };
+
     fetchMockData().catch((err) => console.log("error", err));
+
+    return () => {
+      clearTimeout(debouncedChangeHandler);
+    };
   }, [input]);
+
+  const debounceFn = (func, delay) => {
+    let timer = 0;
+    return (...args) => {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(context, args);
+      }, delay);
+    };
+  };
+
+  const handleChange = (event) => {
+    setInput(event.target.value);
+  };
+
+  // optimize search fn()
+  const debouncedChangeHandler = useMemo(
+    () => debounceFn(handleChange, 300),
+    []
+  );
 
   return (
     <div className="app">
       <input
         placeholder="Search users by ID, address, name..."
-        value={input}
-        onChange={(event) => setInput(event.target.value)}
+        onChange={debouncedChangeHandler}
       />
       {isLoading ? (
         <h3>Loading data...</h3>
@@ -34,7 +61,7 @@ function App() {
             if (input === "") {
               return null;
             } else if (item.name.toLowerCase().includes(input.toLowerCase())) {
-              return { item };
+              return item;
             }
           })
           .map((data, index) => (
