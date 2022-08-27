@@ -9,25 +9,15 @@ function App() {
   useEffect(() => {
     const fetchMockData = async () => {
       const fetchData = await fetch(
-        "http://www.mocky.io/v2/5ba8efb23100007200c2750c"
+        "https://www.mocky.io/v2/5ba8efb23100007200c2750c"
       );
       const response = await fetchData.json();
       setMockData(response);
       setIsLoading(false);
-      console.log("🚀 response", response);
+      // console.log("🚀 response", response);
     };
     fetchMockData().catch((err) => console.log("error", err));
   }, [input]);
-
-  const onSubmitChange = (e) => {
-    e.preventDefault();
-    if (!input.trim()) {
-      alert("please type name/id");
-      return;
-    }
-
-    setInput("");
-  };
 
   return (
     <div className="app">
