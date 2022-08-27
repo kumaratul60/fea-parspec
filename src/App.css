@@ -1,19 +1,42 @@
-.App {
+.app {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.app > input {
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 30px;
+  width: 25%;
+  margin: 10px 10px;
+  outline: none;
+  caret-color: indigo;
+}
+.app > input::placeholder {
   text-align: center;
 }
+.app__item > p {
+  color: blue;
+}
+.app__card {
+  text-align: left;
+  border: black ridge 1px;
+  border-radius: 7px;
+  margin: 10px;
+  width: 20rem;
+  padding: 10px;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  box-shadow: 0px 2px 4px gray;
+  transition: 0.3s ease-in-out;
+}
+.app__card:hover {
+  background-color: rgb(206, 231, 231);
+  transform: scale(1.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.app-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,7 +47,7 @@
   color: white;
 }
 
-.App-link {
+.app-link {
   color: #61dafb;
 }
 
