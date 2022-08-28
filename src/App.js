@@ -15,11 +15,10 @@ function App() {
       const response = await fetchData.json();
       setMockData(response);
       setIsLoading(false);
-      setInput(input);
       // console.log("🚀 response", response);
     };
 
-    fetchMockData().catch((err) => console.log("error", err));
+    fetchMockData().catch((err) => console.log("error", err.message));
 
     return () => {
       clearTimeout(debouncedChangeHandler);
